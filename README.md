@@ -190,3 +190,16 @@ Java中的10颗语法糖
       12：在try语句中定义和关闭资源 jdk7提供了try-with-resources,可以自动关闭相关的资源(只要该资源实现了AutoCloseable接口，
           jdk7为绝大部分资源对象都实现了这个接口)
 </pre>
+
+Nginx/LVS/HAProxy负载均衡软件的优缺点详解
+https://www.cnblogs.com/duanxz/p/5011671.html
+
+<pre>
+负载均衡技术种类
+
+      1：DNS负载均衡
+      2：代理服务器负载均衡
+      3：地址转换网关负载均衡
+      5：反向代理负载均衡
+      6: 混合型负载均衡
+</pre>
