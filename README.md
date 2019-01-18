@@ -203,3 +203,38 @@ https://www.cnblogs.com/duanxz/p/5011671.html
       5：反向代理负载均衡
       6: 混合型负载均衡
 </pre>
+
+<pre>
+INSERT INTO SELECT语句 要求T2表存在
+SELECT INTO FROM语句  要求目标表Table2不存在，因为在插入时会自动创建表Table2，并将Table1中指定字段数据复制到Table2中.
+
+用主键倒序插入：
+      情况和1一样。即默认的"select * from tb" 和 "select * from tb order id(PK) DESC" 是一样的情况，这里说的一样是锁方式
+      一样（都是逐步，只是顺序不一样）。
+
+      从上面可知：通过主键排序或则不加排序字段的导入操作"insert into tb select * from tbx"，是会锁tbx表，但他的锁是逐步地锁
+      定已经扫描过的记录。
+</pre>
+
+<pre>
+Mysql的行转列 VS 列转行
+</pre>
+
+![](https://i.imgur.com/I0O15cZ.png)
+
+![](https://i.imgur.com/wO5axNN.png)
+
+![](https://i.imgur.com/kq2NL6n.png)
+
+<pre>
+Mysql保留关键字
+
+      遇到关键字使用时冲突，查询可以使用``括住关键字。使用的符号是半角的``,即esc下面的那个
+      按键。
+
+      今天在重MySql 语句时出现错误：
+            select * from kw_photo where albumId=102 order by order
+      原来order字段跟关键字冲突，需要用''引起来。
+
+            select * from kw_photo where albumId=102 order by 'order'
+</pre>
