@@ -137,3 +137,40 @@ Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 600
         at com.sun.proxy.$Proxy59.query(Unknown Source)  
         at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:108) 
 </pre>
+
+<pre>
+tomcat调优改用APR库
+
+       1） tomcat默认采用的BIO模型，在几百并发下性能会有很严重的下降。tomcat自带还有NIO的模型，另外也可以调用APR的库来实现操作
+          系统级别控制。
+
+       2） NIO模型是内置的，调用很方便，只需要将上面配置文件中protocol修改成org.apache.coyote.http11.Http11NioProtocol，
+          重启即可生效。上面配置我已经改过了，默认的是HTTP/1.1。
+    
+       3）APR则需要安装第三方库，在高并发下会让性能有明显提升，安装完成后重启即可生效。如使用默认protocal就是apr，但最好把将
+          protocol修改成org.apache.coyote.http11.Http11AprProtocol，会更加明确。
+
+       补充Bio、Nio、Apr模式的测试结果：
+
+       对于这几种模式，我用ab命令模拟1000并发测试10000词，测试结果比较意外，为了确认结果，我每种方式反复测试了10多次，并且在两
+       个服务器上都测试了一遍。结果发现Bio和Nio性能差别非常微弱，难怪默认居然还是Bio。但是采用apr，连接建立的速度会有50%～100%
+       的提升。直接调用操作系统层果然神速啊，这里强烈推荐apr方式！
+</pre>
+
+<pre>
+1、为什么要重写clone()方法？
+
+答案：Java中的浅度复制是不会把要复制的那个对象的引用对象重新开辟一个新的引用空间，当我们需要深度复制的时候，这个时候我们就要重写
+clone()方法。
+
+利用串行化来做深复制
+
+      把对象写到流里的过程是串行化（Serilization）过程，但是在Java程序师圈子里又非常形象地称为“冷冻”或者“腌咸菜（picking）”
+      过程；而把对象从流中读出来的并行化（Deserialization）过程则叫做 “解冻”或者“回鲜(depicking)”过程。
+
+      应当指出的是，写在流里的是对象的一个拷贝，而原对象仍然存在于JVM里面，因此“腌成咸菜”的只是对象的一个拷贝，Java咸菜还可以回
+      鲜。
+
+      在Java语言里深复制一个对象，常常可以先使对象实现Serializable接口，然后把对象（实际上只是对象的一个拷贝）写到一个流里（腌成
+      咸菜），再从流里读出来（把咸菜回鲜），便可以重建对象。
+</pre>
