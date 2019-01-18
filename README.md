@@ -238,3 +238,30 @@ Mysql保留关键字
 
             select * from kw_photo where albumId=102 order by 'order'
 </pre>
+
+<pre>
+Guava Math：
+      主要包含：
+              1）IntMath（处理int），LongMath(处理 long)， BigIntegerMath(处理BigInteger)
+
+Guava HashFunction：
+      另外还包含Hasher, Funnel
+
+      Java内建的散列码[hash code]概念被限制为32位，并且没有分离散列算法和它们所作用的数
+      据，因此很难用备选算法进行替换。此外，使用Java内建方法实现的散列码通常是劣质的，部分
+      是因为它们最终都依赖于JDK类中已有的劣质散列码。
+
+      Object.hashCode往往很快，但是在预防碰撞上却很弱，也没有对分散性的预期。这使得它们很
+      适合在散列表中运用，因为额外碰撞只会带来轻微的性能损失，同时差劲的分散性也可以容易地
+      通过再散列来纠正（Java中所有合理的散列表都用了再散列方法）。然而，在简单散列表以外的
+      散列运用中，Object.hashCode几乎总是达不到要求——因此，有了com.google.common.hash包
+
+Guava Range区间
+
+Guava Cache
+
+Guava 函数式编程
+
+Guava字符串处理
+      Joiner， Splitter
+</pre>
